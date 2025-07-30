@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container" style="max-width:600px">
+            <a href="#" class="navbar-brand">Category</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width:600px">
+        <form  class="input-group my-4">
+            <input type="text" class="form-control">
+            <button class="btn btn-primary">Add</button>
+        </form>
+        <ul class="list-group" id="list"></ul>
+    </div>
+    <script>
+        const api = "http://localhost:8000/api/categories";
+        const token = "1|K7l5AJ3J3oOdSxpfXySqFAgCUOz81d8u5QzBmsrufb895286"
+
+        fetch(api,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        }) 
+            .then(res=> res.json())
+            .then(data => data.map(item => createItem(item)));
+
+            document.querySelector("form").onsubmit = e => {
+                e.preventDefault();
+
+                let name = document.querySelector("input").value;
+                if(!name) return false ;
+
+                fetch (api, {
+                    method: "POST",
+                    body: JSON.stringify({ name }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                })
+                .then(res => res.json())
+                .then(item => createItem(item));
+
+                e.currentTarget.reset();
+            }
+
+            function createItem(item) {
+                let li = document.createElement("li");
+                li.classList.add("list-group-item");
+                li.textContent = item.name;
+
+                let del = document.createElement("a");
+                del.setAttribute("href", "#");
+                del.classList.add("fa-solid", "fa-trash", "float-end", "text-danger");
+                del.onclick = () => {
+                    fetch(`${api}/${item.id}`, 
+                    {method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }});
+                    li.remove();
+                }
+                li.appendChild(del);
+
+
+                document.querySelector("#list").appendChild(li);
+            }
+    </script>
+</body>
+</html>
