@@ -1,9 +1,24 @@
-# Project Overview
 
-This project consists of two main parts:
+# BlogPwd: Laravel 12 Blog & Category Management
 
-- **Frontend** (`app/`): A simple HTML/JavaScript interface for managing categories.
-- **Backend** (`blog/`): A Laravel 12 application providing a RESTful API and a web interface for articles, categories, and user authentication.
+A full-stack web application featuring a Laravel 12 backend and a simple HTML/JS frontend for managing articles, categories, and user authentication.
+
+---
+
+## Project Features
+
+- **Frontend (`app/`):**
+   - Minimal HTML/JavaScript UI for category management (list, add, delete)
+   - Uses Bootstrap and FontAwesome for styling
+   - Communicates with backend API for CRUD operations
+   - Token-based authentication
+
+- **Backend (`blog/`):**
+   - Laravel 12 (PHP 8.2+) RESTful API for categories and articles
+   - User authentication with Laravel Sanctum
+   - Article management with Blade templates
+   - Web interface for articles, categories, and authentication
+   - Uses Vite, Tailwind, and Bootstrap for frontend assets
 
 ---
 
